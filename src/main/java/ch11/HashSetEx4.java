@@ -9,10 +9,12 @@ public class HashSetEx4 {
 		// TODO Auto-generated method stub
 		HashSet set = new HashSet();
 
+		set.add(new String("Dabc"));
 		set.add(new String("abc"));
-		set.add(new String("abc"));
+		set.add(new String("Kimeunho"));
 		set.add(new Person2("David", 10));
 		set.add(new Person2("David", 10));
+		set.add(new Person2("Kimeunho", 2));
 
 		System.out.println(set);
 	}
