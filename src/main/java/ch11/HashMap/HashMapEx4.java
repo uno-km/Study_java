@@ -8,7 +8,7 @@ public class HashMapEx4 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String[] data = { "A", "L", "K", "A", "L", "D", "K", "A", "K", "K", "Z", "D" };
+		String[] data = { "A", "L", "K", "A", "L", "D","D","D","D","D", "K", "A", "K", "K", "Z", "D" }; 
 		HashMap map = new HashMap();
 		for (int i = 0; i < data.length; i++) {
 			if (map.containsKey(data[i])) {

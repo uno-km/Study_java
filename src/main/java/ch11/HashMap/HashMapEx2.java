@@ -32,7 +32,7 @@ public class HashMapEx2 {
 		int total = 0;
 
 		while (it.hasNext()) {
-			Integer i = (Integer) it.next();
+			Integer i = (int) it.next();
 			total += i.intValue();
 		}
 		System.out.println("total score : " + total);
