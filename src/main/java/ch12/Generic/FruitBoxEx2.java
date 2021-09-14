@@ -2,6 +2,8 @@ package ch12.Generic;
 
 import java.util.ArrayList;
 
+import javax.lang.model.element.Element;
+
 class Fruit implements Eatable {
 	public String toString() {
 		return "Fruit";
@@ -37,7 +39,8 @@ public class FruitBoxEx2 {
 		FruitBox<Apple> appleBox = new FruitBox<Apple>();
 		FruitBox<Grape> grapeBox = new FruitBox<Grape>();
 //		FruitBox<Grape> fruitBox<Apple>();
-//		FruitBox<Toy> toyBox = new FruitBox<Toy>();
+//		FruitBox<Toy> toyBox = new FruitBox<Toy>(); //근데 이건 불가능 왜냐하면 토이는 프룻의 자손이 아니여서!
+		Box<Toy> toyBox = new Box<Toy>(); // 이건가능!
 
 		fruitBox.add(new Fruit());
 		fruitBox.add(new Apple());
@@ -45,10 +48,12 @@ public class FruitBoxEx2 {
 		appleBox.add(new Apple());
 //		fruitBox.add(new Grape());
 		grapeBox.add(new Grape());
+		toyBox.addToy(new String("고등어"));
 
 		System.out.println("fruitBox-" + fruitBox);
 		System.out.println("appleBox-" + appleBox);
 		System.out.println("grapeBox-" + grapeBox);
+		System.out.println("toyBox-" + toyBox);
 	}
 }
 
@@ -57,9 +62,14 @@ class FruitBox<T extends Fruit & Eatable> extends Box<T> {
 
 class Box<T> {
 	ArrayList<T> list = new ArrayList<T>();
+	ArrayList<String> listToy = new ArrayList<String>();
 
 	void add(T item) {
 		list.add(item);
+	}
+
+	void addToy(String string) {
+		listToy.add(string);
 	}
 
 	T get(int i) {
@@ -71,6 +81,10 @@ class Box<T> {
 	}
 
 	public String toString() {
-		return list.toString();
+		if (list.isEmpty()) {
+			return listToy.toString();
+		} else {
+			return list.toString();
+		}
 	}
 }
