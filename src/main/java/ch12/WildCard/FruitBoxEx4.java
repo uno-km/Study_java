@@ -51,6 +51,21 @@ class FruitComp implements Comparator<Fruit2> {
 
 public class FruitBoxEx4 {
 	public static void main(String[] args) {
+
+//		Box b = null;
+//		Box b =  new Bo x<String>();
+//		Box<String> b =  new Box<String>();
+//		b.add(new Integer(100)); //스트링박스인데[ 왜 들어가고 경고만나오지?
+		// Box 가 원시타입이라서 그럼 , 그래서 다들어감 , 그런데 Box b에 <String>을 넣으면 에러생김
+//		Box<String> bStr = null;
+
+//		b = (Box) bStr;//Box<String> - > Box 가능 but error
+//		bStr = (Box<String>) b; //Box-> Box<String> 가능 but error
+
+		FruitBox2<? extends Fruit2> fbox = new FruitBox2<Fruit2>();
+		FruitBox2<? extends Fruit2> fbox2 = (FruitBox2<? extends Fruit2>) new FruitBox2<Fruit2>(); //이게원조임
+		FruitBox2<Apple2> abox = new FruitBox2<Apple2>();
+
 		FruitBox2<Apple2> appleBox = new FruitBox2<Apple2>();
 		FruitBox2<Grape2> grapeBox = new FruitBox2<Grape2>();
 
