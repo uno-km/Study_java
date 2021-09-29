@@ -1,7 +1,5 @@
 package ch12.Enum;
 
-import java.sql.Time;
-
 class TIME {
 	static final int EAST = 10;
 	static final int SOUTH = 20;
