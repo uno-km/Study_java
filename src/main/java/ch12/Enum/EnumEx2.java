@@ -53,9 +53,8 @@ public class EnumEx2 {
 		System.out.printf("d2=%s, %d%n", d2.name(), d2.getValue());
 
 		System.out.println(Direction2.EAST.rotate(1));
-		System.out.println(Direction2.EAST.rotate(2));
-		System.out.println(Direction2.EAST.rotate(-1));
-		System.out.println(Direction2.EAST.rotate(-2));
+		System.out.println(Direction2.SOUTH.rotate(1));
+		System.out.println(Direction2.WEST.rotate(1));
 
 	}
 
