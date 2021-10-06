@@ -1,5 +1,6 @@
 package ch12.Annotation;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 
 public class AnnotationEx3 {
@@ -14,6 +15,8 @@ public class AnnotationEx3 {
 		list.add(nc);
 	}
 }
+
+
 
 class nclass {
 	int newField;
