@@ -8,8 +8,13 @@ public class ThreadEx12 {
 		ThreadEx12_2 t2 = new ThreadEx12_2();
 		t1.start();
 		t2.start();
+		delay(2 * 1000);
+	}
+
+	static void delay(long millis) {
 		try {
-			t1.sleep(3000);
+			Thread.sleep(millis);
+
 		} catch (InterruptedException e) {
 
 		}
