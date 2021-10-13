@@ -21,6 +21,7 @@ public class ThreadEx10 implements Runnable {
 		}
 		System.out.println("작업을 종료합니다.");
 	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
