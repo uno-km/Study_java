@@ -79,12 +79,11 @@ class Table2 {
 
 				}
 			}
-			for (int i = 0; i < dishes.size(); i++) {
+			for (int i = 0; i < dishes.size(); i++)
 				if (dishName.equals(dishes.get(i))) {
 					dishes.remove(i);
 					return true;
 				}
-			}
 		}
 		return false;
 	}
