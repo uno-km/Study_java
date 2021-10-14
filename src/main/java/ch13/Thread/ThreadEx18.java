@@ -70,6 +70,6 @@ class Thread18 implements Runnable {
 
 	public void resume() {
 		suspended = false;
-	}
+	}// 이건 메서드 전체가 임계영역
 
 }
