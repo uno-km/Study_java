@@ -9,16 +9,19 @@ public class ThreadEx20 {
 		gc.start();
 
 		int requireMemory = 0;
-		for (int i = 0; i > 20; i++) {
+		for (int i = 0; i < 20; i++) {
 			requireMemory = (int) (Math.random() * 10) * 20;
 			if (gc.freeMemory() < requireMemory || gc.freeMemory() < gc.totalMemory() * 0.4) {
 				gc.interrupt();
+				try {
+					gc.join(1000);
+				} catch (InterruptedException e) {
+				}
 			}
 			gc.usedMemory += requireMemory;
 			System.out.println("usedMemory : " + gc.usedMemory);
 		}
 	}
-
 }
 
 class ThreadEx_20 extends Thread {
@@ -29,10 +32,8 @@ class ThreadEx_20 extends Thread {
 		while (true) {
 			try {
 				Thread.sleep(10 * 1000);
-
 			} catch (InterruptedException e) {
 				System.out.println("Awaken by Free Memory : " + freeMemory());
-
 			}
 			gc();
 			System.out.println("Garbage Collected, Free Memory : " + freeMemory());
