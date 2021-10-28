@@ -15,7 +15,9 @@ public class HashMapEx3 {
 		addPhoneNo("Friends", "yahoChun", "010-9119-9837");
 		addPhoneNo("Friends", "dwaniKim", "010-6438-8125");
 		addPhoneNo("Friends", "hunaHwang", "010-2059-2976");
+		addPhoneNo("Friends", "hunaHwang", "010-9999-2976");
 		addPhoneNo("Friends", "parkJi", "010-4229-4128");
+		addPhoneNo("Familly", "parkJi", "010-4229-4128");
 		printList();
 	}
 
@@ -46,11 +48,13 @@ public class HashMapEx3 {
 			Set subSet = ((HashMap) e.getValue()).entrySet();
 			Iterator subIt = subSet.iterator();
 
-			Map.Entry subE = (Map.Entry) subIt.next();
-			String telNo = (String) subE.getKey();
-			String name = (String) subE.getValue();
+			while (subIt.hasNext()) {
+				Map.Entry subE = (Map.Entry) subIt.next();
+				String telNo = (String) subE.getKey();
+				String name = (String) subE.getValue();
 
-			System.out.println(name + " " + telNo);
+				System.out.println(name + " " + telNo);
+			}
 		}
 		System.out.println();
 	}
