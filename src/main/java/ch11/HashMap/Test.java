@@ -16,7 +16,7 @@ public class Test {
 		list.add("김건호");
 		list.add("김찬호");
 		list.add("김찬호");
-		map.put("가족",list);
+		map.put("가족", list);
 
 		Set set = map.entrySet();
 		Iterator it = set.iterator();
@@ -24,6 +24,11 @@ public class Test {
 			Map.Entry e = (Map.Entry) it.next();
 			System.out.println(e.getKey() + " : " + e.getValue());
 		}
+
 	}
 
+	@FunctionalInterface
+	interface MyFunction {
+		public abstract int max(int a, int b);
+	}
 }
