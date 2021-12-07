@@ -9,8 +9,8 @@ public class LambdaEx2 {
 		// TODO Auto-generated method stub
 		MyFunction2 f = () -> {};
 		Object o = (MyFunction2) (() -> {});
-		String str = ((Object)(MyFunction)(()->{})).toString();
-		Object c = ((MyFunction)(()->{})).getClass();
+		String str = ((Object)(MyFunction2)(()->{})).toString();
+		Object c = ((MyFunction2)(()->{})).getClass();
 		System.out.println("함수인터페이스의 값 : "+f);
 		System.out.println("오브젝트형변환 값 : " + o);
 		System.out.println("문자열 형변환 값" + str);
