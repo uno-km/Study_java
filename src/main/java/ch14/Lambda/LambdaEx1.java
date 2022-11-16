@@ -1,4 +1,4 @@
-package ch14.Lambda;
+package main.java.ch14.Lambda;
 
 interface ex1_fn1 {
 	void run(); // public abstract void run();

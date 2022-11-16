@@ -1,4 +1,4 @@
-package ch14.Lambda;
+package main.java.ch14.Lambda;
 
 @FunctionalInterface
 interface ex3fn1 {

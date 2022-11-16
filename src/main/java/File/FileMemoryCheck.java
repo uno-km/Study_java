@@ -1,4 +1,4 @@
-package File;
+package main.java.File;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -59,7 +63,27 @@ public class FileMemoryCheck
 		// fos.write(bufferArr, 0, bytesData);
 		// }
 	}
-
+	private static void printUsage()
+	{
+		OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+		for (Method method : operatingSystemMXBean.getClass().getDeclaredMethods())
+		{
+			method.setAccessible(true);
+			if(method.getName().startsWith("get") && Modifier.isPublic(method.getModifiers()))
+			{
+				Object value;
+				try
+				{
+					value = method.invoke(operatingSystemMXBean, null);
+				}
+				catch (Exception e)
+				{
+					value = e;
+				} // try
+				System.out.println(method.getName() + " = " + value);
+			} // if
+		} // for
+	}
 	/**
 	 * @메모 파일 생성/저장 메서드호출
 	 **/

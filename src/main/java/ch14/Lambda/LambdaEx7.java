@@ -1,11 +1,13 @@
-package ch14.Lambda;
+package main.java.ch14.Lambda;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class LambdaEx7 {
+public class LambdaEx7
+{
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		// TODO Auto-generated method stub
 		Function<String, Integer> f = (s) -> Integer.parseInt(s, 16);
 		Function<Integer, String> g = (i) -> Integer.toBinaryString(i);
