@@ -6,9 +6,11 @@ import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 
-public class LambdaEx6 {
+public class LambdaEx6
+{
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		// TODO Auto-generated method stub
 		IntSupplier s = () -> (int) (Math.random() * 100) + 1;
 		IntConsumer c = i -> System.out.println(i + ", ");
@@ -24,24 +26,30 @@ public class LambdaEx6 {
 
 	}
 
-	static void maekeRandomList(IntSupplier s, int[] arr) {
-		for (int i = 0; i < arr.length; i++) {
+	static void maekeRandomList(IntSupplier s, int[] arr)
+	{
+		for (int i = 0; i < arr.length; i++)
+		{
 			arr[i] = s.getAsInt();
 		}
 
 	}
 
-	static void printEvenNum(IntPredicate p, IntConsumer c, int[] arr) {
+	static void printEvenNum(IntPredicate p, IntConsumer c, int[] arr)
+	{
 		System.out.println("[");
-		for (int i : arr) {
+		for (int i : arr)
+		{
 			c.accept(i);
 		}
 		System.out.println("]");
 	}
 
-	static int[] doSomething(IntUnaryOperator op, int[] arr) {
+	static int[] doSomething(IntUnaryOperator op, int[] arr)
+	{
 		int[] newArr = new int[arr.length];
-		for (int i = 0; i < newArr.length; i++) {
+		for (int i = 0; i < newArr.length; i++)
+		{
 			newArr[i] = op.applyAsInt(arr[i]);
 		}
 		return newArr;
