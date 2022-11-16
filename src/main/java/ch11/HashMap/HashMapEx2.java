@@ -1,4 +1,4 @@
-package ch11.HashMap;
+package main.java.ch11.HashMap;
 
 import java.util.Collection;
 import java.util.Collections;

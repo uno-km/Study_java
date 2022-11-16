@@ -1,4 +1,4 @@
-package ch11.Collection;
+package main.java.ch11.Collection;
 
 import static java.util.Collections.addAll;
 import static java.util.Collections.binarySearch;

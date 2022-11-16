@@ -1,4 +1,4 @@
-package ch11.HashSet;
+package main.java.ch11.HashSet;
 
 import java.util.Collections;
 import java.util.HashSet;
