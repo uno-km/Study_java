@@ -1,0 +1,78 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>방명록 리스트</title>
+<STYLE TYPE="text/css">
+<!--
+body {
+	font-family: 돋움, Verdana;
+	font-size: 9pt
+}
+
+td {
+	font-family: 돋움, Verdana;
+	font-size: 9pt;
+	text-decoration: none;
+	color: #000000
+}
+-->
+</STYLE>
+<script language="JAVASCRIPT">
+	function empty() {
+		if (document.write.visitor.value == "") {
+			alert("이름을 입력해 주세요.");
+			return false;
+		}
+		if (document.write.email.value == "") {
+			alert("E-mail을 입력해 주세요.");
+			return false;
+		}
+		if (document.write.contents.value == "") {
+			alert("내용을 입력해 주세요.");
+			return false;
+		}
+		return true;
+	}
+</script>
+</head>
+<body>
+	<FORM METHOD="POST" ACTION="write_end.jsp" name="write" onSubmit="return empty()">
+		<table align="center" width="800" border="0">
+			<tr>
+				<td align="right">이름</td>
+				<td>
+					<INPUT TYPE="text" NAME="visitor" size="20">
+				</td>
+			</tr>
+			<tr>
+				<td align="right">E-mail</td>
+				<td>
+					<INPUT TYPE="text" NAME="email" size="30">
+				</td>
+			</tr>
+			<tr>
+				<td align="right">홈 페이지</td>
+				<td>
+					<INPUT TYPE="text" NAME="homepage" size="40" value="http://">
+			</tr>
+			<tr>
+				<td align="right">내용</td>
+				<td>
+					<TEXTAREA NAME="contents" ROWS="10" COLS="40" wrap="hard"></TEXTAREA>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<table border="0">
+						<tr>
+							<td>
+								<INPUT TYPE="submit" value="저장">
+							</td>
+						</tr>
+					</table>
+				<td>
+			</tr>
+		</table>
+	</FORM>
+</body>
+</html>
