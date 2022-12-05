@@ -1,11 +1,8 @@
 package Java.File.cmd;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class SimpleRunCommand
 {
+	@SuppressWarnings("unused")
 	public static void main(String[] args)
 	{
 		try
