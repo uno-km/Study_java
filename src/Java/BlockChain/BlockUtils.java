@@ -1,6 +1,11 @@
 package Java.BlockChain;
 
+import java.security.Key;
 import java.security.MessageDigest;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.util.Base64;
 import java.util.List;
 
 public class BlockUtils
@@ -65,5 +70,62 @@ public class BlockUtils
 			}
 		}
 		return true;
+	}
+	/**
+	 * @apiNote ECDSA 서명을 적용하고 결과를 반환.
+	 * @param (PrivateKey,
+	 *        String) 암호키, 문자열
+	 * @return (byte[]) byte arr
+	 */
+	public static byte[] applyECDSASig(PrivateKey privateKey, String input)
+	{
+		Signature dsa;
+		byte[] output = new byte[0];
+		try
+		{
+			dsa = Signature.getInstance("ECDSA", "BC");
+			dsa.initSign(privateKey);
+			byte[] strByte = input.getBytes();
+			dsa.update(strByte);
+			byte[] realSig = dsa.sign();
+			output = realSig;
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+		return output;
+	}
+	
+	/**
+	 * @apiNote 서명확인
+	 * @param (PublicKey,
+	 *        String, byte[]) 공개키, 문자열, 서명들
+	 * @return (boolean) 유효하면 true
+	 */
+	public static boolean verifyECDSASig(PublicKey publicKey, String data, byte[] signature)
+	{
+		try
+		{
+			Signature ecdsaVerify = Signature.getInstance("ECDSA", "BC");
+			ecdsaVerify.initVerify(publicKey);
+			ecdsaVerify.update(data.getBytes());
+			return ecdsaVerify.verify(signature);
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * @apiNote 키를 받아 문자열로 리턴
+	 * @param (Key)
+	 *        키
+	 * @return (String) 문자열
+	 */
+	public static String getStringFromKey(Key key)
+	{
+		return Base64.getEncoder().encodeToString(key.getEncoded());
 	}
 }
