@@ -11,8 +11,8 @@ public class BlockMining
 {
 	public static void main(String[] args) throws JsonProcessingException
 	{
-		Thread checker = new MemoryChecker();
-		checker.start();
+//		Thread checker = new MemoryChecker();
+//		checker.start();
 		ArrayList<Block> blockChains = new ArrayList<>();
 		for (int i = 0; i < 4; i++)
 		{
