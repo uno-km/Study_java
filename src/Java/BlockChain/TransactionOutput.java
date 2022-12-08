@@ -4,10 +4,10 @@ import java.security.PublicKey;
 
 public class TransactionOutput
 {
-	public String id;
-	public PublicKey reciepient; // 이 코인의 새 주인
-	public float value; // 잔액
-	public String parentTransactionId; // 생성된 트랜잭션의 ID
+	private String id;
+	private PublicKey reciepient; // 이 코인의 새 주인
+	private float value; // 잔액
+	private String parentTransactionId; // 생성된 트랜잭션의 ID
 	
 	// Constructor
 	public TransactionOutput(PublicKey reciepient, float value, String parentTransactionId)
@@ -23,4 +23,45 @@ public class TransactionOutput
 	{
 		return (publicKey == reciepient);
 	}
+	
+	public String getId()
+	{
+		return id;
+	}
+	
+	public void setId(String id)
+	{
+		this.id = id;
+	}
+	
+	public PublicKey getReciepient()
+	{
+		return reciepient;
+	}
+	
+	public void setReciepient(PublicKey reciepient)
+	{
+		this.reciepient = reciepient;
+	}
+	
+	public float getValue()
+	{
+		return value;
+	}
+	
+	public void setValue(float value)
+	{
+		this.value = value;
+	}
+	
+	public String getParentTransactionId()
+	{
+		return parentTransactionId;
+	}
+	
+	public void setParentTransactionId(String parentTransactionId)
+	{
+		this.parentTransactionId = parentTransactionId;
+	}
+	
 }

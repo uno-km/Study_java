@@ -1,56 +1,65 @@
 package Java.BlockChain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 class Block
 {
 	private String hash; // 해시값
-	private String priviousHash; // 이전 해시값
-	private String data; // 데이터
+	private String previousHash; // 이전 해시값
 	private long timeStamp;
 	private int nonce;
+	private String merkleRoot;
+	private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 	
-	public Block(String data, String previousHash)
+	public Block(String previousHash)
 	{
-		this.data = data;
-		this.priviousHash = previousHash;
+		this.previousHash = previousHash;
 		this.timeStamp = new Date().getTime();
 		this.hash = calculateHash();
 	}
 	
 	public String calculateHash()
 	{
-		return BlockUtils.applySha256(this.priviousHash + Long.toString(this.timeStamp) + Integer.toString(this.nonce) + this.data);
+		return BlockUtils.applySha256(this.previousHash + Long.toString(this.timeStamp) + Integer.toString(this.nonce) + this.merkleRoot);
 	}
 	
 	public void mineBlock(int difficulty)
 	{
-		String target = new String(new char[difficulty]).replace('\0', '0');
+		this.merkleRoot = BlockUtils.getMerkleRoot(this.transactions);
 		String tmpHash = this.hash;
-		while (!tmpHash.substring(0, difficulty).equals(target))
+		while (!tmpHash.substring(0, difficulty).equals(BlockUtils.getDificultyString(difficulty)))
 		{
 			this.nonce++;
 			tmpHash = this.calculateHash();
-			// System.out.println(hash);
-			// System.out.println("메모리사용량 : " +
-			// Math.round(MemoryUtils.getSystemCpuLoad() * 100));
 		}
 		this.hash = tmpHash;
 		System.out.println("Block Mined!!! : " + this.hash);
 	}
-	
+	// 블록에 트랜잭션 추가
+	public boolean addTransaction(UnoChain uno, Transaction transaction, float minimumTransaction)
+	{
+		// 거래를 처리하고 유효한지 확인하고, 블록이 생성 블록이 아니라면 무시
+		if (transaction == null) return false;
+		if ((this.previousHash != "0"))
+		{
+			if ((transaction.processTransaction(uno, minimumTransaction) != true))
+			{
+				System.out.println("Transaction failed to process. Discarded.");
+				return false;
+			}
+		}
+		this.transactions.add(transaction);
+		System.out.println("Transaction Successfully added to Block");
+		return true;
+	}
 	public String getHash()
 	{
 		return this.hash;
 	}
 	
-	public String getPriviousHash()
+	public String getPreviousHash()
 	{
-		return this.priviousHash;
-	}
-	
-	public String getData()
-	{
-		return this.data;
+		return this.previousHash;
 	}
 }
