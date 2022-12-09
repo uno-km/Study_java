@@ -10,6 +10,13 @@ public class TransactionOutput
 	private String parentTransactionId; // 생성된 트랜잭션의 ID
 	
 	// Constructor
+	public TransactionOutput(Transaction tr)
+	{
+		this.reciepient = tr.getReciepient();
+		this.value = tr.getValue();
+		this.parentTransactionId = tr.getTransactionId();
+		this.id = BlockUtils.applySha256(BlockUtils.getStringFromKey(reciepient) + Float.toString(value) + parentTransactionId);
+	}
 	public TransactionOutput(PublicKey reciepient, float value, String parentTransactionId)
 	{
 		this.reciepient = reciepient;

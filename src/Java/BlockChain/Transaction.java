@@ -3,6 +3,7 @@ package Java.BlockChain;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Transaction
 {
@@ -15,10 +16,17 @@ public class Transaction
 	private ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
 	private ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
 	
-	public Transaction(PublicKey from, PublicKey to, float value, ArrayList<TransactionInput> inputs)
+	public Transaction(Wallet sender, Wallet reciepient, float value, ArrayList<TransactionInput> inputs)
 	{
-		this.sender = from;
-		this.reciepient = to;
+		this.sender = sender.getPublicKey();
+		this.reciepient = reciepient.getPublicKey();
+		this.value = value;
+		this.inputs = inputs;
+	}
+	public Transaction(PublicKey sender, PublicKey reciepient, float value, ArrayList<TransactionInput> inputs)
+	{
+		this.sender = sender;
+		this.reciepient = reciepient;
 		this.value = value;
 		this.inputs = inputs;
 	}
@@ -41,7 +49,7 @@ public class Transaction
 		return BlockUtils.verifyECDSASig(this.sender, data, this.signature);
 	}
 	
-	public boolean processTransaction(UnoChain unoChain, float minimumTransaction)
+	public boolean processTransaction(HashMap<String, TransactionOutput> UTXOs, float minimumTransaction)
 	{
 		if (verifiySignature() == false)
 		{
@@ -51,7 +59,7 @@ public class Transaction
 		// 트랜잭션 입력을 수집 (사용되지 않았는지 확인)
 		for (TransactionInput i : this.inputs)
 		{
-			i.setUTXO(unoChain.UTXOs.get(i.getTransactionOutputId()));
+			i.setUTXO(UTXOs.get(i.getTransactionOutputId()));
 		}
 		// 트랜잭션이 유효한지 확인
 		if (getInputsValue() < minimumTransaction)
@@ -70,7 +78,7 @@ public class Transaction
 		// 사용 안 함 목록에 출력
 		for (TransactionOutput o : this.outputs)
 		{
-			unoChain.UTXOs.put(o.getId(), o);
+			UTXOs.put(o.getId(), o);
 		}
 		// UTXO 목록에서 사용된 트랜잭션 입력을 제거
 		for (TransactionInput i : this.inputs)
@@ -80,7 +88,7 @@ public class Transaction
 			{
 				continue;
 			}
-			unoChain.UTXOs.remove(i.getUTXO().getId());
+			UTXOs.remove(i.getUTXO().getId());
 		}
 		return true;
 	}
