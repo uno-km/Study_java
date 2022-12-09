@@ -11,12 +11,17 @@ import java.util.List;
 
 public class BlockUtils
 {
+	
 	/** @apiNote 난이도 어려움 */
 	public static int DIFFICULTY_HARD = 6;
 	/** @apiNote 난이도 보통 */
 	public static int DIFFICULTY_NOMAL = 5;
 	/** @apiNote 난이도 쉬움 */
 	public static int DIFFICULTY_EASY = 2;
+	/** @apiNote 난이도 */
+	public static int DIFFICULTY = DIFFICULTY_NOMAL;
+	/** @apiNote 최소 트랜잭션 값 */
+	public static float MIN_TRANSACTION = 0.1f;
 	/**
 	 * @apiNote SHA256 알고리즘을 이용해서 해시값을 만들고 해당 값을 return한다.
 	 * @param (String)
@@ -168,9 +173,9 @@ public class BlockUtils
 		return new String(new char[difficulty]).replace('\0', '0');
 	}
 	
-	public static void addBlock(ArrayList<Block> blockchain, int difficulty, Block newBlock)
+	public static void addBlock(ArrayList<Block> blockchain, Block newBlock)
 	{
-		newBlock.mineBlock(difficulty);
+		newBlock.mineBlock();
 		blockchain.add(newBlock);
 	}
 }
