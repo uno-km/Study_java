@@ -58,10 +58,10 @@ public class Wallet
 		}
 	}
 	// 잔액을 반환하고 이 지갑이 소유한 UTXO를 저장
-	public float getBalance(UnoChain uno)
+	public float getBalance(HashMap<String, TransactionOutput> UTXOArr)
 	{
 		float total = 0;
-		for (Map.Entry<String, TransactionOutput> item : uno.UTXOs.entrySet())
+		for (Map.Entry<String, TransactionOutput> item : UTXOArr.entrySet())
 		{
 			TransactionOutput UTXO = item.getValue();
 			if (UTXO.isMine(publicKey))
@@ -74,9 +74,9 @@ public class Wallet
 		return total;
 	}
 	// 이 지갑에서 새 트랜잭션을 생성하고 반환
-	public Transaction sendFunds(UnoChain uno, PublicKey _recipient, float value)
+	public Transaction sendFunds(HashMap<String, TransactionOutput> UTXOArr, PublicKey _recipient, float value)
 	{
-		if (getBalance(uno) < value)
+		if (getBalance(UTXOArr) < value)
 		{ // 잔금을 모음
 			System.out.println("#Not Enough funds to send transaction. Transaction Discarded.");
 			return null;
