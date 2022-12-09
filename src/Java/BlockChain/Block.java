@@ -2,7 +2,6 @@ package Java.BlockChain;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 import lombok.Data;
 @Data
@@ -41,13 +40,13 @@ class Block
 		System.out.println("Block Mined!!! : " + this.hash);
 	}
 	// 블록에 트랜잭션 추가
-	public boolean addTransaction(HashMap<String, TransactionOutput> UTXOArr, Transaction transaction)
+	public boolean addTransaction(BlockVO block, Transaction transaction)
 	{
 		// 거래를 처리하고 유효한지 확인하고, 블록이 생성 블록이 아니라면 무시
 		if (transaction == null) return false;
 		if ((this.previousHash != "0"))
 		{
-			if ((transaction.processTransaction(UTXOArr, BlockUtils.MIN_TRANSACTION) != true))
+			if ((transaction.processTransaction(block.getUTXOs(), BlockUtils.MIN_TRANSACTION) != true))
 			{
 				System.out.println("Transaction failed to process. Discarded.");
 				return false;

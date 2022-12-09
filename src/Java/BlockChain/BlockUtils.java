@@ -173,9 +173,9 @@ public class BlockUtils
 		return new String(new char[difficulty]).replace('\0', '0');
 	}
 	
-	public static void addBlock(ArrayList<Block> blockchain, Block newBlock)
+	public static void addBlock(BlockVO blockVO, Block newBlock)
 	{
 		newBlock.mineBlock();
-		blockchain.add(newBlock);
+		blockVO.getBlockchain().add(newBlock);
 	}
 }

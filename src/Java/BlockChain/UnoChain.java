@@ -1,8 +1,6 @@
 package Java.BlockChain;
 
 import java.security.Security;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -16,9 +14,8 @@ public class UnoChain
 	
 	public void start()
 	{
+		BlockVO blockVO = new BlockVO();
 		// 사용하지 않은 모든 트랜잭션 목록
-		HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>();
-		ArrayList<Block> blockchain = new ArrayList<Block>();
 		Security.addProvider(new BouncyCastleProvider());
 		Wallet walletA = new Wallet();
 		Wallet walletB = new Wallet();
@@ -32,31 +29,31 @@ public class UnoChain
 		// 트랜잭션 출력 수동 추가
 		bitCoinTransaction.getOutputs().add(new TransactionOutput(bitCoinTransaction));
 		// 첫 번째 트랜잭션을 UTXO 목록에 저장하는 것이 중요
-		UTXOs.put(bitCoinTransaction.getOutputs().get(0).getId(), bitCoinTransaction.getOutputs().get(0));
+		blockVO.getUTXOs().put(bitCoinTransaction.getOutputs().get(0).getId(), bitCoinTransaction.getOutputs().get(0));
 		System.out.println("Creating and Mining Genesis block... ");
 		Block bitCoin = new Block("0");
-		bitCoin.addTransaction(UTXOs, bitCoinTransaction);
-		BlockUtils.addBlock(blockchain, bitCoin);
+		bitCoin.addTransaction(blockVO, bitCoinTransaction);
+		BlockUtils.addBlock(blockVO, bitCoin);
 		// testing
 		Block block1 = new Block(bitCoin.getHash());
-		System.out.println("\nWalletA's balance is: " + walletA.getBalance(UTXOs));
+		System.out.println("\nWalletA's balance is: " + walletA.getBalance(blockVO));
 		System.out.println("\nWalletA is Attempting to send funds (40) to WalletB...");
-		block1.addTransaction(UTXOs, walletA.sendFunds(UTXOs, walletB.getPublicKey(), 40f));
-		BlockUtils.addBlock(blockchain, block1);
-		System.out.println("\nWalletA's balance is: " + walletA.getBalance(UTXOs));
-		System.out.println("WalletB's balance is: " + walletB.getBalance(UTXOs));
+		block1.addTransaction(blockVO, walletA.sendFunds(blockVO, walletB.getPublicKey(), 40f));
+		BlockUtils.addBlock(blockVO, block1);
+		System.out.println("\nWalletA's balance is: " + walletA.getBalance(blockVO));
+		System.out.println("WalletB's balance is: " + walletB.getBalance(blockVO));
 		
 		Block block2 = new Block(block1.getHash());
 		System.out.println("\nWalletA Attempting to send more funds (1000) than it has...");
-		block2.addTransaction(UTXOs, walletA.sendFunds(UTXOs, walletB.getPublicKey(), 1000f));
-		BlockUtils.addBlock(blockchain, block2);
-		System.out.println("\nWalletA's balance is: " + walletA.getBalance(UTXOs));
-		System.out.println("WalletB's balance is: " + walletB.getBalance(UTXOs));
+		block2.addTransaction(blockVO, walletA.sendFunds(blockVO, walletB.getPublicKey(), 1000f));
+		BlockUtils.addBlock(blockVO, block2);
+		System.out.println("\nWalletA's balance is: " + walletA.getBalance(blockVO));
+		System.out.println("WalletB's balance is: " + walletB.getBalance(blockVO));
 		
 		Block block3 = new Block(block2.getHash());
 		System.out.println("\nWalletB is Attempting to send funds (20) to WalletA...");
-		block3.addTransaction(UTXOs, walletB.sendFunds(UTXOs, walletA.getPublicKey(), 20));
-		System.out.println("\nWalletA's balance is: " + walletA.getBalance(UTXOs));
-		System.out.println("WalletB's balance is: " + walletB.getBalance(UTXOs));
+		block3.addTransaction(blockVO, walletB.sendFunds(blockVO, walletA.getPublicKey(), 20));
+		System.out.println("\nWalletA's balance is: " + walletA.getBalance(blockVO));
+		System.out.println("WalletB's balance is: " + walletB.getBalance(blockVO));
 	}
 }
