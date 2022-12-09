@@ -5,6 +5,8 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import lombok.Data;
+@Data
 public class Transaction
 {
 	private float value;
@@ -119,70 +121,4 @@ public class Transaction
 		}
 		return total;
 	}
-	
-	public float getValue()
-	{
-		return value;
-	}
-	public void setValue(float value)
-	{
-		this.value = value;
-	}
-	public PublicKey getSender()
-	{
-		return sender;
-	}
-	public void setSender(PublicKey sender)
-	{
-		this.sender = sender;
-	}
-	public PublicKey getReciepient()
-	{
-		return reciepient;
-	}
-	public void setReciepient(PublicKey reciepient)
-	{
-		this.reciepient = reciepient;
-	}
-	public String getTransactionId()
-	{
-		return transactionId;
-	}
-	public void setTransactionId(String transactionId)
-	{
-		this.transactionId = transactionId;
-	}
-	public byte[] getSignature()
-	{
-		return signature;
-	}
-	public void setSignature(byte[] signature)
-	{
-		this.signature = signature;
-	}
-	public int getSequence()
-	{
-		return sequence;
-	}
-	public void setSequence(int sequence)
-	{
-		this.sequence = sequence;
-	}
-	public ArrayList<TransactionInput> getInputs()
-	{
-		return inputs;
-	}
-	public void setInputs(ArrayList<TransactionInput> inputs)
-	{
-		this.inputs = inputs;
-	}
-	public ArrayList<TransactionOutput> getOutputs()
-	{
-		return outputs;
-	}
-	public void setOutputs(ArrayList<TransactionOutput> outputs)
-	{
-		this.outputs = outputs;
-	}
-	
 }

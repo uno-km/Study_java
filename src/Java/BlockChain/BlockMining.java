@@ -23,7 +23,7 @@ public class BlockMining
 			{
 				block = new Block(blockChains.get(i - 1).getHash());
 			}
-			block.mineBlock(BlockUtils.DIFFICULTY_NOMAL);
+			block.mineBlock();
 			blockChains.add(block);
 		}
 		System.out.println("Bloack is Valid : " + BlockUtils.inChainValid(blockChains));

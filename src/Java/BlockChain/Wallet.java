@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
+@Data
 public class Wallet
 {
 	private PrivateKey privateKey;
@@ -17,22 +19,6 @@ public class Wallet
 	// 이 지갑이 소유한 UTXO만 보관
 	public HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>();
 	
-	public PrivateKey getPrivateKey()
-	{
-		return privateKey;
-	}
-	public void setPrivateKey(PrivateKey privateKey)
-	{
-		this.privateKey = privateKey;
-	}
-	public PublicKey getPublicKey()
-	{
-		return publicKey;
-	}
-	public void setPublicKey(PublicKey publicKey)
-	{
-		this.publicKey = publicKey;
-	}
 	public Wallet()
 	{
 		generateKeyPair();

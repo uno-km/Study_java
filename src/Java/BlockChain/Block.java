@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import lombok.Data;
+@Data
 class Block
 {
 	private String hash; // 해시값
@@ -54,14 +56,5 @@ class Block
 		this.transactions.add(transaction);
 		System.out.println("Transaction Successfully added to Block");
 		return true;
-	}
-	public String getHash()
-	{
-		return this.hash;
-	}
-	
-	public String getPreviousHash()
-	{
-		return this.previousHash;
 	}
 }

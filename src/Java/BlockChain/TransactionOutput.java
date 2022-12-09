@@ -2,6 +2,8 @@ package Java.BlockChain;
 
 import java.security.PublicKey;
 
+import lombok.Data;
+@Data
 public class TransactionOutput
 {
 	private String id;
@@ -30,45 +32,4 @@ public class TransactionOutput
 	{
 		return (publicKey == reciepient);
 	}
-	
-	public String getId()
-	{
-		return id;
-	}
-	
-	public void setId(String id)
-	{
-		this.id = id;
-	}
-	
-	public PublicKey getReciepient()
-	{
-		return reciepient;
-	}
-	
-	public void setReciepient(PublicKey reciepient)
-	{
-		this.reciepient = reciepient;
-	}
-	
-	public float getValue()
-	{
-		return value;
-	}
-	
-	public void setValue(float value)
-	{
-		this.value = value;
-	}
-	
-	public String getParentTransactionId()
-	{
-		return parentTransactionId;
-	}
-	
-	public void setParentTransactionId(String parentTransactionId)
-	{
-		this.parentTransactionId = parentTransactionId;
-	}
-	
 }
