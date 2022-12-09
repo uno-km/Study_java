@@ -2,6 +2,7 @@ package Java.BlockChain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 class Block
 {
@@ -24,11 +25,12 @@ class Block
 		return BlockUtils.applySha256(this.previousHash + Long.toString(this.timeStamp) + Integer.toString(this.nonce) + this.merkleRoot);
 	}
 	
-	public void mineBlock(int difficulty)
+	public void mineBlock()
 	{
 		this.merkleRoot = BlockUtils.getMerkleRoot(this.transactions);
 		String tmpHash = this.hash;
-		while (!tmpHash.substring(0, difficulty).equals(BlockUtils.getDificultyString(difficulty)))
+		int dif = BlockUtils.DIFFICULTY;
+		while (!tmpHash.substring(0, dif).equals(BlockUtils.getDificultyString(dif)))
 		{
 			this.nonce++;
 			tmpHash = this.calculateHash();
@@ -37,13 +39,13 @@ class Block
 		System.out.println("Block Mined!!! : " + this.hash);
 	}
 	// 블록에 트랜잭션 추가
-	public boolean addTransaction(UnoChain uno, Transaction transaction, float minimumTransaction)
+	public boolean addTransaction(HashMap<String, TransactionOutput> UTXOArr, Transaction transaction)
 	{
 		// 거래를 처리하고 유효한지 확인하고, 블록이 생성 블록이 아니라면 무시
 		if (transaction == null) return false;
 		if ((this.previousHash != "0"))
 		{
-			if ((transaction.processTransaction(uno, minimumTransaction) != true))
+			if ((transaction.processTransaction(UTXOArr, BlockUtils.MIN_TRANSACTION) != true))
 			{
 				System.out.println("Transaction failed to process. Discarded.");
 				return false;
