@@ -134,6 +134,10 @@ public class BlockUtils
 	{
 		return Base64.getEncoder().encodeToString(key.getEncoded());
 	}
+	public static String getStringFromKey(Key key1, Key key2)
+	{
+		return Base64.getEncoder().encodeToString(key1.getEncoded()) + Base64.getEncoder().encodeToString(key2.getEncoded());
+	}
 	/**
 	 * @apiNote 트랜잭션 배열을 처리하고 머클 루트를 반환
 	 * @param (List

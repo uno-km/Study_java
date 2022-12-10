@@ -8,12 +8,18 @@ import lombok.Data;
 class Block
 {
 	private String hash; // 해시값
-	private String previousHash; // 이전 해시값
-	private long timeStamp;
-	private int nonce;
 	private String merkleRoot;
+	private String previousHash; // 이전 해시값
+	private int nonce;
+	private long timeStamp;
 	private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 	
+	public Block()
+	{
+		this.previousHash = "0";
+		this.timeStamp = new Date().getTime();
+		this.hash = calculateHash();
+	}
 	public Block(String previousHash)
 	{
 		this.previousHash = previousHash;
