@@ -21,7 +21,7 @@ public class UnoChain
 		Wallet walletB = new Wallet();
 		Wallet coinbase = new Wallet();
 		// 100 으노코인을 지갑으로 보내는 비트코인 트랜잭션을 만듭니다
-		Transaction bitCoinTransaction = new Transaction(coinbase, walletA, 100f, null);
+		Transaction bitCoinTransaction = new Transaction(coinbase, walletA, 100f);
 		// 생성 트랜잭션에 수동으로 서명
 		bitCoinTransaction.generateSignature(coinbase.getPrivateKey());
 		// 트랜잭션 ID 수동 설정
@@ -31,7 +31,7 @@ public class UnoChain
 		// 첫 번째 트랜잭션을 UTXO 목록에 저장하는 것이 중요
 		blockVO.getUTXOs().put(bitCoinTransaction.getOutputs().get(0).getId(), bitCoinTransaction.getOutputs().get(0));
 		System.out.println("Creating and Mining Genesis block... ");
-		Block bitCoin = new Block("0");
+		Block bitCoin = new Block();
 		bitCoin.addTransaction(blockVO, bitCoinTransaction);
 		BlockUtils.addBlock(blockVO, bitCoin);
 		// testing

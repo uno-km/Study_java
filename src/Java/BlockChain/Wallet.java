@@ -21,11 +21,6 @@ public class Wallet
 	
 	public Wallet()
 	{
-		generateKeyPair();
-	}
-	
-	public void generateKeyPair()
-	{
 		try
 		{
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("ECDSA", "BC");
@@ -60,7 +55,7 @@ public class Wallet
 		return total;
 	}
 	// 이 지갑에서 새 트랜잭션을 생성하고 반환
-	public Transaction sendFunds(BlockVO blockVO, PublicKey _recipient, float value)
+	public Transaction sendFunds(BlockVO blockVO, PublicKey recipient, float value)
 	{
 		if (getBalance(blockVO) < value)
 		{ // 잔금을 모음
@@ -77,7 +72,7 @@ public class Wallet
 			inputs.add(new TransactionInput(UTXO.getId()));
 			if (total > value) break;
 		}
-		Transaction newTransaction = new Transaction(publicKey, _recipient, value, inputs);
+		Transaction newTransaction = new Transaction(publicKey, recipient, value, inputs);
 		newTransaction.generateSignature(privateKey);
 		for (TransactionInput input : inputs)
 		{
