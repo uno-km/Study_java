@@ -4,25 +4,22 @@ import java.security.PublicKey;
 
 import lombok.Data;
 @Data
-public class TransactionOutput
+public class TransactionOutput extends TransactionSuper
 {
 	private String id;
-	private PublicKey reciepient; // 이 코인의 새 주인
-	private float value; // 잔액
 	private String parentTransactionId; // 생성된 트랜잭션의 ID
 	
-	// Constructor
 	public TransactionOutput(Transaction tr)
 	{
-		this.reciepient = tr.getReciepient();
-		this.value = tr.getValue();
+		super.reciepient = tr.getReciepient();
+		super.value = tr.getValue();
 		this.parentTransactionId = tr.getTransactionId();
-		this.id = BlockUtils.applySha256(BlockUtils.getStringFromKey(reciepient) + Float.toString(value) + parentTransactionId);
+		this.id = BlockUtils.applySha256(BlockUtils.getStringFromKey(super.reciepient) + Float.toString(super.value) + parentTransactionId);
 	}
 	public TransactionOutput(PublicKey reciepient, float value, String parentTransactionId)
 	{
-		this.reciepient = reciepient;
-		this.value = value;
+		super.reciepient = reciepient;
+		super.value = value;
 		this.parentTransactionId = parentTransactionId;
 		this.id = BlockUtils.applySha256(BlockUtils.getStringFromKey(reciepient) + Float.toString(value) + parentTransactionId);
 	}
@@ -30,6 +27,6 @@ public class TransactionOutput
 	// 동전이 내껀지 확인
 	public boolean isMine(PublicKey publicKey)
 	{
-		return (publicKey == reciepient);
+		return (this.reciepient == publicKey);
 	}
 }
