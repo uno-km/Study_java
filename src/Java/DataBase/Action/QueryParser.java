@@ -4,9 +4,9 @@ import Java.DataBase.Querys.SQLFactory;
 import Java.DataBase.Utils.ExceptionUtils;
 
 public class QueryParser {
-	String[] validCommands = { "SELECT", "UPDATE", "INSERT", "DELETE" };
+	final String[] validCommands = { "SELECT", "UPDATE", "INSERT", "DELETE" };
 
-	public Object parseCommand(String userInput) {
+	public String parseCommand(String userInput) {
 		String[] lines = userInput.split("\\s+");
 		String firstLine = lines[0].trim().toUpperCase();
 		for (String command : validCommands) {
@@ -16,7 +16,7 @@ public class QueryParser {
 					ExceptionUtils.generateException("해당하는 SQL 명령문이 없습니다.", sqlfac);
 				} else {
 					sqlfac.getSQLQuery().execute(userInput);
-					return sqlfac.getSQLQuery().getCache();
+					return sqlfac.getSQLQuery().getResult();
 				}
 			}
 		}

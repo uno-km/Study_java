@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LoadTables {
-	public void setTables(Map<String, Map<String, List<Object>>> tableData) {
+	public void setTables(Map<String, Map<String, List<Object>>> tableData, String tableNm) {
 		final String CSV_FILE_PATH = "C:\\Users\\zhfld\\git\\Study_java\\src\\Java\\DataBase\\tables";
 		File folder = new File(CSV_FILE_PATH);
 		File[] files = folder.listFiles();
@@ -21,7 +21,11 @@ public class LoadTables {
 		}
 		for (File file : files) {
 			if (file.isFile() && file.getName().toLowerCase().endsWith(".csv")) {
-				this.readCSVData(tableData, file);
+				String fileNm = file.getName().replace(".csv", "").toUpperCase();
+				if (fileNm.equalsIgnoreCase(tableNm.toUpperCase())) {
+					this.readCSVData(tableData, file);
+					break;
+				}
 			}
 		}
 	}

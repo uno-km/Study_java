@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Java.DataBase.Memory.SQLCache;
+import Java.DataBase.Memory.SQLResult;
 import Java.DataBase.Memory.TableMemory;
 import Java.DataBase.Utils.ExceptionUtils;
 import Java.DataBase.Utils.StringUtils;
 
-public class SelectQuery extends SQLCache implements SQLQuery {
+public class SelectQuery extends SQLResult implements SQLQuery {
 	public static final String query = "select";
 
 	private int selectIndex;
@@ -18,18 +18,18 @@ public class SelectQuery extends SQLCache implements SQLQuery {
 	private int whereIndex;
 
 	@Override
-	public Map<String, Object> getCache() {
-		return super.getCache();
+	public String getResult() {
+		return super.getResult();
 	}
 
 	@Override
-	protected void setCache(Map<String, Object> cache) {
-		super.setCache(cache);
+	protected void setResult(String result) {
+		super.setResult(result);
 	}
 
 	@Override
 	public void execute(String sqlQuery) {
-		Map<String, Object> cache = new HashMap<>();
+		Map<String, Object> result = new HashMap<>();
 		this.selectIndex = StringUtils.findIndexIgnoringCase(sqlQuery, "SELECT");
 		this.fromIndex = StringUtils.findIndexIgnoringCase(sqlQuery, "FROM");
 		this.whereIndex = StringUtils.findIndexIgnoringCase(sqlQuery, "WHERE");
@@ -38,7 +38,8 @@ public class SelectQuery extends SQLCache implements SQLQuery {
 		}
 		String tableInputName = this.getTableName(sqlQuery);
 		TableMemory tm = new TableMemory();
-		if (!tm.getTableData().containsKey(tableInputName.toUpperCase())) {
+		tm.setTableData(tableInputName.toUpperCase());
+		if (tm.getTableData().isEmpty()) {
 			ExceptionUtils.generateException("찾으시는 테이블이 없습니다", tableInputName);
 		}
 		Map<String, List<Object>> table = tm.getTableData().get(tableInputName.toUpperCase());
@@ -48,16 +49,10 @@ public class SelectQuery extends SQLCache implements SQLQuery {
 		List<Object> reationInstance = table.get("reationInstance");
 		ArrayList<Object> parsedConditions = this.getConditions(sqlQuery);
 		ArrayList<Map<String, String>> viewTable = this.getViewTable(reationInstance, selection, parsedConditions);
-		this.drawTable(selection, viewTable);
-		cache.put("query", sqlQuery);
-		cache.put("type", query);
-		cache.put("full-table", table);
-		cache.put("columns", columns);
-		cache.put("selection", selection);
-		cache.put("reationInstance", reationInstance);
-		cache.put("parsedConditions", parsedConditions);
-		cache.put("viewTable", viewTable);
-		this.setCache(cache);
+		String view = "";
+		result.put(view, view);
+		this.drawTable(selection, viewTable, result);
+		this.setResult((String) result.get("view"));
 	}
 
 	private ArrayList<Object> getSelectonList(String sqlQuery, ArrayList<Object> columns) {
@@ -100,28 +95,26 @@ public class SelectQuery extends SQLCache implements SQLQuery {
 		return parsedConditions;
 	}
 
-	private void drawTable(ArrayList<Object> selectionList, ArrayList<Map<String, String>> viewTable) {
-		this.drawColumsHeader(selectionList);
-		this.drawReationInstance(viewTable, selectionList);
+	private void drawTable(ArrayList<Object> selectionList, ArrayList<Map<String, String>> viewTable,
+			Map<String, Object> result) {
+		this.drawColumsHeader(selectionList, result);
+		this.drawReationInstance(viewTable, selectionList, result);
 	}
 
-	private void drawReationInstance(ArrayList<Map<String, String>> viewTable, ArrayList<Object> selectionList) {
+	private void drawReationInstance(ArrayList<Map<String, String>> viewTable, ArrayList<Object> selectionList,
+			Map<String, Object> result) {
 		int rowCnt = 1;
 		String row = "";
-		String endLine = "-";
 		for (Map<String, String> tuple : viewTable) {
-			row = "|" + rowCnt + "|";
+			row += "|" + rowCnt + "|";
 			for (Object selection : selectionList) {
 				row += tuple.get(selection) + "|";
 			}
-			System.out.print(row);
-			System.out.println();
+			row += "\n";
 			rowCnt++;
 		}
-		for (int i = 0; i < row.chars().count(); i++) {
-			endLine += "-";
-		}
-		System.out.println(endLine);
+		String endLine = ":::쿼리결과::: " + rowCnt + "건\n";
+		result.put("view", (String) result.get("view") + row + endLine);
 	}
 
 	private void checkSelection(ArrayList<Object> selection, ArrayList<Object> colums) {
@@ -191,11 +184,12 @@ public class SelectQuery extends SQLCache implements SQLQuery {
 		return viewTable;
 	}
 
-	private void drawColumsHeader(ArrayList<Object> selectionList) {
+	private void drawColumsHeader(ArrayList<Object> selectionList, Map<String, Object> result) {
 		String colLine = "|C|";
 		for (Object col : selectionList) {
 			colLine += (String) col + "|";
 		}
-		System.out.println(colLine);
+		colLine += "\n";
+		result.put("view", colLine);
 	}
 }
