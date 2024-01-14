@@ -60,6 +60,7 @@ public class FileMoveAndDeleteFolder {
 			if (!folderPath.isEmpty()) {
 				File folder = new File(folderPath);
 				moveFile(folder, convertedListTextArea);
+				confirmRenameFiles(folder);
 			}
 		});
 		setFunctionMap();
@@ -101,7 +102,6 @@ public class FileMoveAndDeleteFolder {
 		List<String> convertedFiles = new ArrayList<>();
 		moveFileAndSetSuccessFileNames(sourceDirectory, subDirectories, convertedFiles);
 		displayConvertedFiles(convertedFiles, convertedListTextArea);
-		confirmRenameFiles(sourceDirectory);
 	}
 
 	private static void moveFileAndSetSuccessFileNames(final File sourceDirectory, File[] subDirectories,
@@ -170,12 +170,12 @@ public class FileMoveAndDeleteFolder {
 
 	private static void renameFile(File toFolder, File file) {
 		if (file.isFile()) {
-			String originFileName = file.getName();
-			String newFilename = originFileName;
+			String newFilename = file.getName();
 			Set<String> separators = functionMap.keySet();
 			for (String separator : separators) {
 				if (newFilename.contains(separator)) {
 					newFilename = functionMap.get(separator).apply(newFilename);
+					break;
 				}
 			}
 			rename(toFolder, file, newFilename);

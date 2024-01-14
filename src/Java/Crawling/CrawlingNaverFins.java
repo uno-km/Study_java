@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -26,9 +24,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class CrawlingNaverFins extends JFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/* 실습을 위한 상수형의 Url 주소 : 내 티스토리 포스팅 주소 */
 	final static String URL_STRING = "https://uno-kim.tistory.com/215";
@@ -36,16 +31,12 @@ public class CrawlingNaverFins extends JFrame {
 	final static String TASK_ID = "MyPost";
 	/* 파일이 생성될 곳의 주소, 실경로를 설정 */
 	final static String SAVE_DIR = "C:\\Users\\zhfld\\downloads\\img";
-	/* 이미지파일 확장자 */
-	final static String IMG_EXT = ".png";
-	/* 파일명 구분자 */
-	final static String FILE_SEPARATOR = "_";
-	/* 버퍼사이즈 맥스로 주고 상수형으로 관리 */
-	final static int BUFFER_SIZE = 4096;
 	/* 이미지 태그 */
 	final static String TAG_IMG = "img";
 	/* 소스 속성(attribute) */
 	final static String ATTR_SRC = "src";
+	/* 버퍼사이즈 맥스로 주고 상수형으로 관리 */
+	final static int BUFFER_SIZE = 4096;
 
 	private final JTextField urlField;
 	private final JButton downloadButton;
@@ -123,11 +114,8 @@ public class CrawlingNaverFins extends JFrame {
 			for (int i = 0; i < images.size(); i++) {
 				String connImgUrl = images.get(i).attr(ATTR_SRC);
 				HttpURLConnection connUrl = (HttpURLConnection) new URL(connImgUrl).openConnection();
-
 				if (connUrl.getResponseCode() == HttpURLConnection.HTTP_OK) {
-					String fileName = "MyPost" + FILE_SEPARATOR
-							+ LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + FILE_SEPARATOR + i
-							+ IMG_EXT;
+					String fileName = FileUtils.getFileName("naver", i);
 					FileOutputStream fileOutputStream = new FileOutputStream(new File(SAVE_DIR, fileName));
 					InputStream inputStream = connUrl.getInputStream();
 
