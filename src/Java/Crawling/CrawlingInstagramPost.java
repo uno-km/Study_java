@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CrawlingInstagramPost {
-	static final String connImgUrl = "https://www.instagram.com/p/C0obU4zJy3L/";
+	static final String connImgUrl = "https://www.instagram.com/p/CyWQEROveEK/";
 
 	public static void main(String[] args) throws MalformedURLException, IOException {
 		System.setProperty("webdriver.http.factory", "jdk-http-client");
